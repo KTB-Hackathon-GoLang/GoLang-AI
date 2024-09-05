@@ -1,15 +1,11 @@
-from langchain_core.prompts import ChatPromptTemplate, SystemMessagePromptTemplate,  HumanMessagePromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_openai import ChatOpenAI
 import secret
 
-# 프롬프트
-chat_prompt = ChatPromptTemplate.from_messages(
-    [
-        SystemMessagePromptTemplate.from_template("{user}가 {target}에게 보내는 대화 내용을 순화하여 표현해 보세요. 욕설이 있으면 제외하고 격한 표현이 있으면 돌려 표현하세요. 단, 담고 있는 의미는 누락되어서는 안 됩니다."),
-        HumanMessagePromptTemplate.from_template("{user_input}"),
-    ]
-)
+import os
+import sys
+sys.path.append(os.path.abspath('prompt/'))
+import prompt
 
 # LLM 
 llm = ChatOpenAI(
@@ -18,12 +14,13 @@ llm = ChatOpenAI(
     openai_api_key = secret.openai_api_key
 )
 
-USER="아버지"
-TARGET="아들"
-USER_INPUT="너를 자식이라고 낳은 게 한심하다. 수능 8등급이 뭐냐!!? 학원비 1000억 들여 가며 공부시켰으면 이 이상은 해내야 사람이라고 할 수 있을 것 아니냐!! 한번만 더 이런 점수를 점수라고 받아온다면 그날부로 호적에서 파버릴 줄 알아라!!"
+
+USER="팀장"
+TARGET="팀원"
+USER_INPUT="미안하다. 너희들을 과대평가해서 미안하다. 너희들로도 이 간단한 프로젝트 정도는 진행할 수 있을 줄 알았다."
 
 # 메시지 포맷팅
-formatted_messages = chat_prompt.format(user=USER, target=TARGET, user_input=USER_INPUT)
+formatted_messages = prompt.chat_prompt.format(user=USER, target=TARGET, user_input=USER_INPUT)
 
 example_list = []
 for example in range(3):
