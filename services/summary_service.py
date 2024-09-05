@@ -1,10 +1,8 @@
 from openai import OpenAI
 
 client = OpenAI()
-with open('prompts/summary_prompt', 'r') as file:
-    prompt = file.read()
 
-def summary(message):
+def summary(prompt, message):
     completion = client.chat.completions.create(
         model='gpt-4o-mini',
         messages=[
