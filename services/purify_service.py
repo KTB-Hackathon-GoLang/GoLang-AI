@@ -1,3 +1,4 @@
+import os
 from langchain_core.output_parsers import StrOutputParser
 from aiModel import llm
 from prompts import purify_prompt
