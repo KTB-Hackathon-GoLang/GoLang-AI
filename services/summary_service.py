@@ -1,10 +1,7 @@
 from langchain_core.output_parsers import StrOutputParser
-import os
-import sys
-sys.path.append(os.path.abspath('LLM/'))
-sys.path.append(os.path.abspath('prompt/'))
-import llm, summary_prompt,context
-
+from LLM import llm
+from prompt import summary_prompt
+import context
 
 def summary(user_id, user, target, message):
     history = context.get_user_memory(user_id)
