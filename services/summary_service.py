@@ -1,17 +1,17 @@
-from openai import OpenAI
+from langchain_core.output_parsers import StrOutputParser
+import os
+import sys
+sys.path.append(os.path.abspath('LLM/'))
+sys.path.append(os.path.abspath('prompt/'))
+import llm, summary_prompt
 
-client = OpenAI()
 
-def summary(prompt, message):
-    completion = client.chat.completions.create(
-        model='gpt-4o-mini',
-        messages=[
-            {
-                'role': 'system', 'content': prompt
-            }, {
-                'role': 'user', 'content': message
-            }
-        ]
-    )
+def summary(user,target,message):
+    formatted_messages = summary_prompt.make_summary_prompt(user,target,message)
+    
+    response = llm.AI_model.invoke(formatted_messages)
 
-    return completion.choices[0].message.content
+    parser = StrOutputParser()
+    parsed_output = parser.parse(response)
+
+    return parsed_output.content
