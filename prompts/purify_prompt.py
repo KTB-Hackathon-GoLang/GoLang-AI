@@ -1,6 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate, SystemMessagePromptTemplate,  HumanMessagePromptTemplate
 
-PUTIFY_PROMPT = '''### 지시 ### 
+purify_system_message = '''### 지시 ### 
 주어지는 문장을 순화하라. 욕설이 있으면 제외하라. 격한 표현이 있으면 돌려 표현하라. 조롱조가 있으면 표현을 긍정적으로 바꿔 표현하라. 단, 담고 있는 의미는 누락되어서는 안 된다. 
 ### 실행 순서 ###
 1. 비속어를 순화한 문장을 3가지 만들어라.
@@ -18,11 +18,11 @@ json 형식으로 출력하되 아래 형식으로 출력하라.
     ]
 }}'''
 
-def make_putify_prompt(user,target,user_input) :
+def make_purify_prompt(relation, user_input, history) :
     putify_prompt = ChatPromptTemplate.from_messages(
         [
-            SystemMessagePromptTemplate.from_template("다음은 {USER}가 {TARGET}에게 보내는 대화 내용이다." + PUTIFY_PROMPT),
+            SystemMessagePromptTemplate.from_template("다음은 '{RELATION}' 간의 대화이며 '{HISTORY}'라는 대화를 나누었다." + purify_system_message),
             HumanMessagePromptTemplate.from_template("{USER_INPUT}"),
         ]
-    ).format(USER=user, TARGET=target, USER_INPUT=user_input)
+    ).format(RELATION=relation, USER_INPUT=user_input, HISTORY=history)
     return putify_prompt

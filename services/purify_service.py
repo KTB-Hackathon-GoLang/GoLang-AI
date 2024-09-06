@@ -1,12 +1,12 @@
 from langchain_core.output_parsers import StrOutputParser
 from LLM import llm
-from prompt import putify_prompt
-import context
+from prompts import purify_prompt
+from services import context
 
 
-def purify(user_id, user, target, message):
+def purify(user_id, relation, message):
     history = context.get_user_memory(user_id)
-    formatted_messages = putify_prompt.make_putify_prompt(user,target,message, history)
+    formatted_messages = purify_prompt.make_purify_prompt(relation, message, history)
     
     response = llm.AI_model.invoke(formatted_messages)
 
