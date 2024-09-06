@@ -308,9 +308,4 @@ pip-selfcheck.json
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,python,pycharm+all,venv
 *_test.py
-prompts/*
-
 secret.py
-prompt
-
-service/prompts/*
