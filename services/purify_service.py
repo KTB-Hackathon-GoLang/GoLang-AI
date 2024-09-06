@@ -5,7 +5,7 @@ from prompts import purify_prompt
 from services import context
 from services import rag_service
 
-
+# file_path DB에서 어케 잘 해주세여
 def purify(user_id, chating_room_id, relation, explain_situation, message, file_path=None): 
     history = context.get_user_memory(user_id)
     

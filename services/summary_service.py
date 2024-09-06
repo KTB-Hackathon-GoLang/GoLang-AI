@@ -2,7 +2,7 @@ from langchain_core.output_parsers import StrOutputParser
 from aiModel import llm
 from prompts import summary_prompt
 from services import context,rag_service
-
+# file_path DB에서 어케 잘 해주세여
 def summary(user_id, chating_room_id, relation,  explain_situation,message,file_path=None): 
     history = context.get_user_memory(user_id)
     
