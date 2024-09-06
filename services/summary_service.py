@@ -3,7 +3,7 @@ from aiModel import llm
 from prompts import summary_prompt
 from services import context,rag_service
 
-def summary(user_id, chating_room_id, relation, message,file_path=None): 
+def summary(user_id, chating_room_id, relation,  explain_situation,message,file_path=None): 
     history = context.get_user_memory(user_id)
     
     if file_path:
@@ -14,7 +14,7 @@ def summary(user_id, chating_room_id, relation, message,file_path=None):
         related_documents = "none"
 
     # 메시지와 관련된 프롬프트 생성
-    formatted_messages = summary_prompt.make_summary_prompt(relation, message, history, related_documents)
+    formatted_messages = summary_prompt.make_summary_prompt(relation,  explain_situation,message, history, related_documents)
 
     # AI 모델 응답 생성
     response = llm.AI_model.invoke(formatted_messages)

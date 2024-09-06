@@ -6,7 +6,7 @@ from services import context
 from services import rag_service
 
 
-def purify(user_id, chating_room_id, relation, message, file_path=None): 
+def purify(user_id, chating_room_id, relation, explain_situation, message, file_path=None): 
     history = context.get_user_memory(user_id)
     
     if file_path:
@@ -16,7 +16,7 @@ def purify(user_id, chating_room_id, relation, message, file_path=None):
     else:
         related_documents = "none"
 
-    formatted_messages = purify_prompt.make_purify_prompt(relation, message, history, related_documents)
+    formatted_messages = purify_prompt.make_purify_prompt(relation,  explain_situation,message, history, related_documents)
     response = llm.AI_model.invoke(formatted_messages)
         
     parser = StrOutputParser()
