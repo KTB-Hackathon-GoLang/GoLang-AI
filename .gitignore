@@ -311,6 +311,4 @@ pip-selfcheck.json
 prompts/*
 
 secret.py
-prompt
-
 service/prompts/*
