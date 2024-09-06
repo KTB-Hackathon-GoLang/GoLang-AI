@@ -313,3 +313,6 @@ secret.py
 
 test.py
 test
+/golang
+/golang/share/man/
+/golang/share/
