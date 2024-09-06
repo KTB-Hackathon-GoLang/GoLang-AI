@@ -312,4 +312,11 @@ pip-selfcheck.json
 secret.py
 
 test.py
+
 test
+/golang
+/golang/share/man/
+/golang/share/
+
+test/aichattest.py
+
