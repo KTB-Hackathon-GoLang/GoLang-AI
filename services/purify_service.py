@@ -2,7 +2,7 @@ import os
 from langchain_core.output_parsers import StrOutputParser
 from aiModel import llm
 from prompts import purify_prompt
-from services import context, rag_service
+from services import context
 from langchain.vectorstores import Chroma
 from langchain.embeddings import CacheBackedEmbeddings
 from langchain.storage import LocalFileStore
