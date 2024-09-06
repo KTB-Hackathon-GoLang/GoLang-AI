@@ -1,5 +1,5 @@
 from langchain.memory import ConversationSummaryBufferMemory
-from LLM import llm
+from aiModel import llm
 
 memory_store = {}
 

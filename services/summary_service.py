@@ -1,5 +1,5 @@
 from langchain_core.output_parsers import StrOutputParser
-from LLM import llm
+from aiModel import llm
 from prompts import summary_prompt
 from services import context
 
