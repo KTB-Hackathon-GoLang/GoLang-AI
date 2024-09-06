@@ -1,12 +1,10 @@
 from openai import OpenAI
 
 client = OpenAI()
-with open('prompts/purify_prompt', 'r') as file:
-    prompt = file.read()
 
-def purify(message):
+def purify(prompt, message):
     completion = client.chat.completions.create(
-        model='gpt-4o',
+        model='gpt-4o-mini',
         messages=[
             {
                 'role': 'system', 'content': prompt
