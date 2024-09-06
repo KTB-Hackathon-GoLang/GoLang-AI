@@ -25,7 +25,7 @@ def make_purify_prompt(relation, user_input, history, related_documents) :
 
     putify_prompt = ChatPromptTemplate.from_messages(
         [
-            SystemMessagePromptTemplate.from_template("다음은 '{RELATION}' 간의 대화이며 그들은 이전에 '{HISTORY}'라는 대화를 나누었다. 이와 관련된 자료 내용으로는 '{RELATED_DOCUMENTS}'가 있다. " + purify_system_message),
+            SystemMessagePromptTemplate.from_template("다음은 '{RELATION}' 간의 대화이며 그들은 이전에 '{HISTORY}'라는 대화를 나누었다. 이와 관련된 자료 내용으로는 '{RELATED_DOCUMENTS}'가 있다. 자료 내용을 참고하여 다음 주어지는 문장을 보완하여라." + purify_system_message),
             HumanMessagePromptTemplate.from_template("{USER_INPUT}"),
         ]
     ).format(RELATION=relation, USER_INPUT=user_input, HISTORY=history,RELATED_DOCUMENTS =related_documents)

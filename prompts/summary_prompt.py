@@ -1,7 +1,7 @@
 from langchain_core.prompts import ChatPromptTemplate, SystemMessagePromptTemplate,  HumanMessagePromptTemplate
 
 summary_system_message = '''### 지시 ###
-주어지는 문장은 두서없이 작성한 문장이다. 내용을 요약하고 정리하라. 단, 원본 문장의 말투는 변경하지 마시오.
+주어지는 문장은 두서없이 작성한 문장이다. 상대방이 정확하게 이해할 수 있도록 내용을 요약하고 정리하라. 단, 원본 문장의 말투는(주로 대화체) 변경하지 마시오.
 총 2가지 다른 방식으로 요약하라.
 정리할 내용이 아무것도 없다면 그대로 출력해도 된다.
 
@@ -19,7 +19,7 @@ def make_summary_prompt(relation, user_input, history, related_documents) :
 
     summary_prompt = ChatPromptTemplate.from_messages(
         [
-            SystemMessagePromptTemplate.from_template("다음은 '{RELATION}' 간의 대화이며 그들은 이전에 '{HISTORY}'라는 대화를 나누었다. 이와 관련된 자료 내용으로는 '{RELATED_DOCUMENTS}'가 있다." + summary_system_message),
+            SystemMessagePromptTemplate.from_template("다음은 '{RELATION}' 간의 대화이며 그들은 이전에 '{HISTORY}'라는 대화를 나누었다. 이와 관련된 자료 내용으로는 '{RELATED_DOCUMENTS}'가 있다. 자료 내용을 참고하여 다음 주어지는 문장을 보완하여라." + summary_system_message),
             HumanMessagePromptTemplate.from_template("{USER_INPUT}"),
         ]
     ).format(RELATION=relation, USER_INPUT=user_input, HISTORY= history, RELATED_DOCUMENTS= related_documents)
