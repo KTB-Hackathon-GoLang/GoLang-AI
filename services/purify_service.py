@@ -13,4 +13,5 @@ def purify(user_id, relation, message):
     parser = StrOutputParser()
     parsed_output = parser.parse(response)
 
+    context.add_message(user_id,message,parsed_output.content)
     return parsed_output.content
