@@ -1,15 +1,16 @@
 from langchain_core.output_parsers import StrOutputParser
+
 from aiModel import llm
 from prompts import ai_chat_prompt
 from services import context
 from services import rag_service
 
 
-# file_path DB에서 어케 잘 해주세여
 def ai_chating(user_id, chating_room_id, relation, explain_situation, message, file_path=None): 
     history = context.get_user_memory(user_id)
     
     if file_path:
+        file_path = f"/home/ubuntu/files/{file_path}"
         retriever = rag_service.make_rag_file(file_path,chating_room_id)
         related_documents = retriever.get_relevant_documents(message)
     else:

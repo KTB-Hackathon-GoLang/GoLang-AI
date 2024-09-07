@@ -2,12 +2,7 @@ from langchain_core.prompts import ChatPromptTemplate, SystemMessagePromptTempla
 
 purify_system_message = '''### 지시 ### 
 역할과 상황에 몰입하여 대답하여라. 필요하다면 질문도 가능하다.
-
-### 출력 형식 ###
-json 형식으로 출력하되 아래 형식으로 출력하라.
-{{
-    "message": //응답
-}}'''
+'''
 
 def make_ai_chating_prompt(relation,  explain_situation,user_input, history, related_documents) :
     if related_documents != "none":

@@ -1,10 +1,13 @@
-from langchain.storage import LocalFileStore 
-from langchain.text_splitter import CharacterTextSplitter
+import os
+
 from langchain.document_loaders import UnstructuredFileLoader
 from langchain.embeddings import CacheBackedEmbeddings
-from langchain.vectorstores import Chroma 
+from langchain.storage import LocalFileStore
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.vectorstores import Chroma
+
 from aiModel import embedding_model
-import os
+
 
 def make_rag_file(file_path, chating_room_id):
     # 저장소
@@ -13,6 +16,7 @@ def make_rag_file(file_path, chating_room_id):
     cache_dir = LocalFileStore(cache_dir_path)
 
     # 문서 로드하고 쪼개기
+    # file_path = f"/home/ubuntu/files/{file_path}"
     loader = UnstructuredFileLoader(file_path)
     splitter = CharacterTextSplitter.from_tiktoken_encoder(
         separator="\n",

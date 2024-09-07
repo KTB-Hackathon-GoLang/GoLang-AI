@@ -1,12 +1,15 @@
 from langchain_core.output_parsers import StrOutputParser
+
 from aiModel import llm
 from prompts import summary_prompt
-from services import context,rag_service
-# file_path DB에서 어케 잘 해주세여
-def summary(user_id, chating_room_id, relation,  explain_situation,message,file_path=None): 
+from services import context, rag_service
+
+
+def summary(user_id, chating_room_id, relation,  explain_situation,message,file_path=None):
     history = context.get_user_memory(user_id)
     
     if file_path:
+        # file_path = f"/home/ubuntu/files/{file_path}"
         retriever = rag_service.make_rag_file(file_path,chating_room_id)
         # 메시지와 관련된 문서 검색
         related_documents = retriever.get_relevant_documents(message)
