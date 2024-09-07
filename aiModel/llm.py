@@ -1,4 +1,5 @@
 from langchain_openai import ChatOpenAI
+
 import secret
 
 AI_model = ChatOpenAI(
