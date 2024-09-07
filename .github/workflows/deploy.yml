@@ -12,30 +12,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-
-    # secret.py 파일 생성
-    - name: create secret.py
-      run: |
-        echo "${{ secrets.SECRET_KEY }}" > secret.py
-
-    # 도커 이미지 빌드
-    - name: docker build
-      run: |
-        docker build -t ${{ secrets.DOCKER_IMAGE_NAME }}:latest . # 도커 빌드
-
-    # 도커 로그인
-    - name: docker Login
-      uses: docker/login-action@v3.3.0
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-
-    # 도커 이미지 push
-    - name: push docker images
-      run: |
-        docker push ${{ secrets.DOCKER_IMAGE_NAME }}:latest
-          
+      - uses: actions/checkout@v4
+      
+      # secret.py 파일 생성
+      - name: Create secret.py
+        run: |
+          echo "openai_api_key='${{ secrets.OPENAI_API_KEY }}'" > secret.py
+          echo "NAVER_CLOUD_ACCESS_KEY='${{ secrets.NAVER_CLOUD_ACCESS_KEY }}'" >> secret.py
+          echo "NAVER_CLOUD_SECRET_KEY='${{ secrets.NAVER_CLOUD_SECRET_KEY }}'" >> secret.py
+          echo "DB_HOST='${{ secrets.DB_HOST }}'" >> secret.py
+          echo "DB_USER='${{ secrets.DB_USER }}'" >> secret.py
+          echo "DB_PASSWORD='${{ secrets.DB_PASSWORD }}'" >> secret.py
+      
+      # 도커 이미지 빌드
+      - name: Docker build
+        run: |
+          docker build -t ${{ secrets.DOCKER_IMAGE_NAME }}:latest . # 도커 빌드
+      
+      # 도커 로그인
+      - name: Docker Login
+        uses: docker/login-action@v3.3.0
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      
+      # 도커 이미지 push
+      - name: Push docker images
+        run: |
+          docker push ${{ secrets.DOCKER_IMAGE_NAME }}:latest
+  
   # 도커 이미지 EC2 인스턴스에 배포
   deploy-to-ec2:
     needs: build-and-push
@@ -48,9 +53,9 @@ jobs:
           host: ${{ secrets.EC2_HOST }} # EC2 IP 주소
           username: ${{ secrets.EC2_USER }} # EC2 사용자
           key: ${{ secrets.PRIVATE_KEY }} # pem 키
-
-          # 기존 컨테이너 중지
+          script_stop: false # 스크립트 중지 방지
           script: |
+            # 기존 컨테이너 중지
             CONTAINER_ID=$(sudo docker ps -aq --filter "name=golang-ai")
 
             if [ ! -z "$CONTAINER_ID" ]; then
@@ -60,5 +65,5 @@ jobs:
 
             # 최신 도커 이미지로 컨테이너 실행
             sudo docker pull ${{ secrets.DOCKER_IMAGE_NAME }}:latest # 도커 최신 이미지 다운로드
-            docker run --name golang-ai -d -v /home/ubuntu/files:/home/ubuntu/files --add-host host.docker.internal:host-gateway -p 8000:8000 ${{ secrets.DOCKER_IMAGE_NAME }}:latest
+            sudo docker run --name golang-ai -d -v /home/ubuntu/files:/home/ubuntu/files -p 8000:8000 ${{ secrets.DOCKER_IMAGE_NAME }}:latest
             sudo docker image prune -f # 구버전의 도커 이미지 제거
