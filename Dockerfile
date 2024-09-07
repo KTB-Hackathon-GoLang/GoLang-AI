@@ -6,7 +6,7 @@ WORKDIR /app
 
 # 필요한 패키지 설치 및 타임존 설정 (tzdata 포함)
 RUN apt-get update && \
-    apt-get install -y python3-pip tzdata && \
+    apt-get install -y python3-pip tzdata libmagic-dev && \
     apt-get clean
 
 # 타임존 설정 (Asia/Seoul)
@@ -18,7 +18,13 @@ RUN python3 -m venv /app/golang
 
 # 가상환경 활성화 및 필요한 패키지 설치
 RUN /app/golang/bin/pip install --upgrade pip && \
-    /app/golang/bin/pip install openai fastapi[standard] langchain langchain_openai
+    /app/golang/bin/pip install openai fastapi[standard] langchain langchain_openai \
+    unstructured \
+    langchain-community \
+    langchain_chroma \
+    langchain_unstructured \
+    mariadb \
+    pymongo
 
 # 2단계: 실제 실행 환경
 FROM python:3.12-slim
@@ -29,7 +35,7 @@ WORKDIR /app
 # 타임존 설정 (Asia/Seoul)
 ENV TZ=Asia/Seoul
 RUN apt-get update && \
-    apt-get install -y tzdata && \
+    apt-get install -y tzdata libmagic-dev && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
     apt-get clean
 
