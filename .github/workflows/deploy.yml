@@ -17,7 +17,7 @@ jobs:
     # secret.py 파일 생성
     - name: create secret.py
       run: |
-        echo "openai_api_key='${{ secrets.SECRET_KEY }}'" > secret.py
+        echo "${{ secrets.SECRET_KEY }}" > secret.py
 
     # 도커 이미지 빌드
     - name: docker build

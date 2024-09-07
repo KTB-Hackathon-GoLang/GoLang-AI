@@ -41,8 +41,9 @@ COPY secret.py /app/
 COPY main.py /app/
 COPY models /app/models
 COPY services /app/services
-COPY LLM /app/LLM
+COPY aiModel /app/aiModel
 COPY prompts /app/prompts
+COPY repository /app/repository
 
 # FastAPI 앱 실행
 CMD ["/app/golang/bin/fastapi", "run"]
