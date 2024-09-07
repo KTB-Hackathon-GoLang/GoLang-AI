@@ -9,7 +9,7 @@ class DB:
     def __init__(self, database):
         self.conn = mariadb.connect(
             host=secret.DB_HOST,
-            port=10021,
+            port=3306,
             user=secret.DB_USER,
             password=secret.DB_PASSWORD,
             database=database,
