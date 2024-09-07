@@ -60,5 +60,5 @@ jobs:
 
             # 최신 도커 이미지로 컨테이너 실행
             sudo docker pull ${{ secrets.DOCKER_IMAGE_NAME }}:latest # 도커 최신 이미지 다운로드
-            docker run --name golang-ai -d -v /home/ubuntu/files:/home/ubuntu/files -p 8000:8000 ${{ secrets.DOCKER_IMAGE_NAME }}:latest
+            docker run --name golang-ai -d -v /home/ubuntu/files:/home/ubuntu/files --add-host host.docker.internal:host-gateway -p 8000:8000 ${{ secrets.DOCKER_IMAGE_NAME }}:latest
             sudo docker image prune -f # 구버전의 도커 이미지 제거
