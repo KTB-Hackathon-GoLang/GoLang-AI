@@ -1,4 +1,3 @@
-
 def make_chat_title_prompt(relation, explain_situation):
     prompt = f"""
     아래는 두 사람 사이의 대화입니다. 두 사람의 관계는 "{relation}"이고, 상황은 "{explain_situation}"입니다.

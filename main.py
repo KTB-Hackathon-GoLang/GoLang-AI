@@ -27,11 +27,11 @@ async def purify_router(user: UserRequest):
         "success": True,
         "message": "응답이 성공적으로 생성되었습니다.",
         "data": json.loads(purify(
-            user_id=user.username,
-            chating_room_id=user.chatroom_uuid,
+            username=user.username,
+            chatroom_id=user.chatroom_uuid,
             relation=user.relation,
             explain_situation=chat_detail_repository.find_detail(user.chatroom_uuid),
-            message=user.chat_message,
+            chat_message=user.chat_message,
             file_path=chat_file_repository.find_by_chatroom_id(user.chatroom_uuid)
         ))
     }
@@ -44,11 +44,11 @@ async def summary_router(user: UserRequest):
         "success": True,
         "message": "응답이 성공적으로 생성되었습니다.",
         "data": json.loads(summary(
-            user_id=user.username,
-            chating_room_id=user.chatroom_uuid,
+            username=user.username,
+            chatroom_id=user.chatroom_uuid,
             relation=user.relation,
             explain_situation=chat_detail_repository.find_detail(user.chatroom_uuid),
-            message=user.chat_message,
+            chat_message=user.chat_message,
             file_path=chat_file_repository.find_by_chatroom_id(user.chatroom_uuid)
         ))
     }
@@ -61,11 +61,11 @@ async def chatbot_router(user: UserRequest):
         "success": True,
         "message": "응답이 성공적으로 생성되었습니다.",
         "data": ai_chating(
-            user_id=user.username,
-            chating_room_id=user.chatroom_uuid,
+            username=user.username,
+            chatroom_id=user.chatroom_uuid,
             relation=user.relation,
             explain_situation=chat_detail_repository.find_detail(user.chatroom_uuid),
-            message=user.chat_message,
+            chat_message=user.chat_message,
             file_path=chat_file_repository.find_by_chatroom_id(user.chatroom_uuid)
         )
     }
