@@ -35,7 +35,8 @@ class ChatRepository:
 class ChatDetailRepository:
     db = request_connect_db('test')['DB']
 
-    def find_detail(self, chatroom_id) -> str:
-        response = self.db.execute(f'SELECT detail FROM chat_detail WHERE chatroom_id = {chatroom_id}')
+    def find_detail(self, chatroom_uuid) -> str:
+        chatroom_id = self.db.execute(f'SELECT chatroom_id FROM chatroom WHERE chatroom_uuid = "{chatroom_uuid}"')[0]['chatroom_id']
+        response = self.db.execute(f'SELECT detail FROM chat_detail WHERE chatroom_id = "{chatroom_id}"')
 
         return response[0]['detail']
